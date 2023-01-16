@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+{% for message in messages %}
+<div class= "messages" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="True">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+<div class="container">
+  <section id="card-section">
+    <div class="row">
+      {% for curso in dados %}
+      <div class="col-md-4">
+        <div class="card cards">
+          <img href="{% url 'detalhe_curso' curso.id %}" src="{{curso.imagem.url}}" alt="Card image cap">
+          <div class="card-body">
+            <a href="{% url 'detalhe_curso' curso.id %}"><h5 class="card-title">{{curso.titulo}}</h5></a>
+            <p class="card-text">{{curso.descricao|truncatewords:30}}</p>
+            <h5 class="card-text">Carga Horária: <strong>{{curso.carga_horaria}}</strong></h5>
+            <a href="{% url 'inscricao' curso.id %}" class="btn btn-primary">Inscrever</a>
+            <a href="{% url 'editar_curso' curso.id %}"><button type="button" class="btn btn-link">Editar</button></a>
+            <a href="{% url 'deletar_curso' curso.id %}"><button type="button" class="btn btn-outline-danger float-right" data-toggle="modal" data-target="#myModal">Deletar</button></a>
+          </div>
+        </div>
+      </div>
+{% endfor %}
+  </section>
+</div>
+
+
+
+{% endblock%}
+
+
+
+
+

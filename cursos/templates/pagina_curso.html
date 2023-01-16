@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+{% for message in messages %}
+<div class= "messages" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="True">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+<div class="container-fluid mt-4">
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="accordion mb-2" id="accordionExample">
+				{% if modulos %}
+				{% for modulo in modulos %}
+				<div class="card">
+					<div class="card-header" id="headingOne">
+						<h2 class="mb-0">									
+							<a data-toggle="collapse" data-target="#collapse{{modulo.id}}" aria-expanded="false" aria-controls="navbarCollapse">
+								<span><i class="fa fa-cube"></i>{{modulo.titulo}}</span><a href="{% url 'adicionar_conteudo' modulo.id %}"><i type="button" class="btn btn-link float-right botao toggle">Adicionar aula</i></a>
+							</a>
+						</h2>		
+					</div>
+					<div id="collapse{{modulo.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div class="card-body">
+							<ul class="list-group">
+							{% for aula in modulo.conteudos.all %}
+							<li class="list-group-item list-aulas"><a href="{% url 'detalhe_aula' aula.pk %}"><i class="fa fa-video-camera"></i>{{aula.titulo}}</a></li>
+							{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>{% endfor %}{% endif %}
+			</div>
+		</div>
+		<div class="col-lg-8">
+				<div class="container-fluid">
+					<nav aria-label="breadcrumb">
+					<a href="{% url 'adicionar_modulo' curso.id %}"><button type="button" class="btn btn-outline-primary float-right">Adicionar Módulo</button></a>
+						<ol class="breadcrumb">
+						  <li class="breadcrumb-item"><a href="{% url "cursos" %}">Cursos</a></li>
+						  <li class="breadcrumb-item active" aria-current="page">{{curso.titulo}}</li>
+						
+
+						</ol>
+					</nav>
+
+					<br>
+
+			        <div class="card cor-card auth-card">
+			            <div class="card-body">
+			                <h4 class="card-title text-center"></h4>
+			        
+							  <form method="post" enctype="multipart/form-data">
+						
+							    <div class="embed-responsive embed-responsive-16by9">
+						    <div class="embed-responsive embed-responsive-16by9">
+						    	{% video conteudo.url_video '426x240' %}
+							</div>
+</div>
+		
+							  </form>
+
+			                <br>
+			               
+			            </div>
+			        </div>
+			
+				</div>  
+			  </div>
+		</div>
+	</div>
+</div>
+{% endblock %}

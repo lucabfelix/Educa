@@ -1,0 +1,32 @@
+{% extends  'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Registrar{% endblock %}
+
+{% block conteudo %}
+<br>
+<form method="post" action="">
+   {% csrf_token %}
+<div class="jumbotron">
+  <h2>Tem certeza que deseja deletar este curso?</h2>
+    <div class="modal-body">
+
+      <h4>Curso a ser deletado: <span class="badge badge-secondary">{{ dado.titulo }}</span></h4>
+
+      <hr>
+    </div>
+  <input class="btn btn-danger" type="submit" value="Deletar" />
+  <a href="{% url request.GET.proxima|default:'cursos' %}"><div class="btn btn-primary">Cancelar</div></a>
+</div>
+</form>
+{% endblock %}
+
+<td><a href="{% url 'curso' instance.id %}">Deletar</a></td>
+
+
+
+
+
+
+
+<button type="button" class="btn btn-danger">Danger</button>

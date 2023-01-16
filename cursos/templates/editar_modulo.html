@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Entrar{% endblock %}
+
+{% block conteudo %}
+{% for message in messages %}
+<div class= "messages" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="True">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+<br>
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card auth-card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Editar Módulo: <strong>{{modulo.titulo}}</strong></h4>
+        
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="form-group col-md-12 mb-0">
+              {{ form.titulo|as_crispy_field }}
+            </div>
+          </div>
+          {{ form.descricao|as_crispy_field }}
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+              {{ form.carga_horaria|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+              {{ form.ordem|as_crispy_field }}
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Editar Módulo</button>
+        </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+

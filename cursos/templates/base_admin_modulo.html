@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+{% for message in messages %}
+<div class= "messages" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="True">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+<div class="container-fluid mt-4">
+	<div class="row">
+		
+		<div class="col-lg-12">
+				<div class="container-fluid">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+						  <li class="breadcrumb-item"><a href="{% url "area_restrita" %}">Cursos</a></li>
+						  <li class="breadcrumb-item active" aria-current="page">{{curso.titulo}}</li>
+						  
+						</ol>
+					</nav>
+				    <div class="table-responsive">
+				        <div class="table-wrapper">         
+				            <div class="table-title">
+				                <div class="row">
+				                    <div class="col-sm-6">
+				                        <h2>Módulos <b>Cadastrados</b></h2>
+				                    </div>
+				                    <div class="col-sm-6">
+				                        <div class="search-box">                            
+				                                 <a href="{% url 'adicionar_modulo' curso.id %}?proxima={% url "area_restrita_modulos" curso.id %}" type="button" class="btn btn-outline-light">Cadastrar Módulo</a>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+				            
+				            <table class="table table-striped">
+				                <thead>
+				                    <tr>
+				                        <th>#</th>
+				                        <th>Título</th>
+				                        <th>Descrição</th>
+				                        <th>Conteúdo</th>
+				                        <th>Carga Horária</th>
+				                        <th>Ações</th>
+				                    </tr>
+				                </thead>
+				                <tbody>
+				                {% for modulo in modulos %}
+				                    <tr>
+				                        <td>{{modulo.id}}</td>
+				                        <td>{{modulo.titulo}}</td>
+				                        <td>{{modulo.descricao|truncatewords:3}}</td>
+				                  		<td>
+										    <a type="button" href="{% url "area_restrita_conteudos" modulo.id %}" class="btn btn-secondary btn-sm">Conteúdo do Curso</a>
+										</td>
+				                  		<td>{{modulo.carga_horaria}}</td>
+				                        <td>
+				                            <a href="{% url "editar_modulo" modulo.id %}" class="edit" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+				                            <a href="{% url "deletar_modulo" modulo.id %}" class="delete" title="Deletar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+				                        </td>
+				                    </tr>
+				       			{% endfor %}
+				                </tbody>
+				            </table>
+				        </div>
+				        	<br>
+							<nav aria-label="Page navigation example">
+							  <ul class="pagination justify-content-center">
+							    
+							 
+
+							{% if venues.has_previous %}
+								<li class="page-item"><a class="page-link" href="?page=1">&laquo Primeiro</a></li>
+
+								<li class="page-item"><a class="page-link" href="?page={{ venues.previous_page_number }}">Anterior</a></li>
+								
+							{% endif %}
+
+							<!--
+							<li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
+							-->
+
+							{% for i in nums %}
+								<li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+
+							{% endfor %}
+
+
+							{% if venues.has_next %}
+								<li class="page-item"><a class="page-link" href="?page={{ venues.next_page_number }}">Próximo</a></li>
+
+								<li class="page-item"><a class="page-link" href="?page={{ venues.paginator.num_pages }}">Último &raquo</a></li>
+
+							{% endif %}
+
+							 </ul>
+							</nav>
+				    </div>        
+				</div>  
+			  </div>
+		</div>
+	</div>
+</div>
+{% endblock %}

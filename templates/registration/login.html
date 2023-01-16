@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Entrar{% endblock %}
+
+{% block conteudo %}
+{% for message in messages %}
+<div class= "messages" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="True">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+<br>
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card auth-card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Acessar Conta</h4>
+        
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next }}">
+        
+                    {{ form|crispy }}
+
+                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                </form>
+                <br>
+                <p class="change-form-p">Quer criar uma conta? <a href="{% url 'registro' %}">Clique aqui!</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
